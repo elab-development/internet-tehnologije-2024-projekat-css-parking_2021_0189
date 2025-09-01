@@ -45,4 +45,10 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function userLevels()
+    {
+        return $this->hasMany(UserLevel::class);
+    }
+
 }
