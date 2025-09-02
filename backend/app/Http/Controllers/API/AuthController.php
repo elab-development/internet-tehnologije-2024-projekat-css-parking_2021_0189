@@ -15,7 +15,10 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
-            'role' => 'sometimes|in:admin,user' // Opciono, ako želite da specificirate ulogu
+            'role' => 'sometimes|in:admin,user',
+            'progress' => 'sometimes|array',
+            'progress.*.level_id' => 'required|exists:levels,id',
+            'progress.*.duration' => 'required|integer|min:1'
         ]);
         
         if ($validator->fails()) {
@@ -31,6 +34,20 @@ class AuthController extends Controller
             'role' => $request->role ?? 'user', // Podrazumevana uloga je 'user'
         ]);
         
+        if ($request->has('progress')) {
+            foreach ($request->progress as $levelProgress) {
+                UserLevel::updateOrCreate(
+                    [
+                        'user_id' => $user->id,
+                        'level_id' => $levelProgress['level_id']
+                    ],
+                    [
+                        'duration' => $levelProgress['duration']
+                    ]
+                );
+            }
+        }
+
         $token = $user->createToken('auth_token')->plainTextToken;
         
         return response()->json([
