@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Validator;
+use App\Models\User;
+use App\Models\UserLevel;
+use Illuminate\Support\Facades\Auth; 
 
 class AuthController extends Controller
 {
