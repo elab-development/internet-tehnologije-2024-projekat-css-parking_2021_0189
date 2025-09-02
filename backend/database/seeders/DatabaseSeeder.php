@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Level;
+use App\Models\UserLevel;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,11 +15,28 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // Kreiranje admin korisnika
+        User::factory()->admin()->create([
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'password' => bcrypt('password')
         ]);
+
+        // Kreiranje običnih korisnika
+        User::factory(10)->create();
+
+        // Kreiranje levela
+        Level::factory(5)->create();
+
+        // Kreiranje user_level veza
+        foreach (User::all() as $user) {
+            foreach (Level::all()->random(3) as $level) {
+                UserLevel::create([
+                    'user_id' => $user->id,
+                    'level_id' => $level->id,
+                    'duration' => rand(30, 300),
+                ]);
+            }
+        }
     }
 }
