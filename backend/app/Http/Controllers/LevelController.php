@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\Level;
+use App\Models\UserLevel;
 
 class LevelController extends Controller
 {
