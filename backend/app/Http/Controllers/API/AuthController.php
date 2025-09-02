@@ -11,60 +11,73 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        $data = $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => ['required', 'confirmed', Password::min(8)],
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'role' => 'sometimes|in:admin,user' // Opciono, ako želite da specificirate ulogu
         ]);
-
+        
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 422);
+        }
+        
         $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role ?? 'user', // Podrazumevana uloga je 'user'
         ]);
-
-        $token = $user->createToken('api-token')->plainTextToken;
-
+        
+        $token = $user->createToken('auth_token')->plainTextToken;
+        
         return response()->json([
-            'user' => $user,
-            'token' => $token,
+            'message' => 'Uspešna registracija',
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+            'user' => $user
         ], 201);
     }
 
     public function login(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'email' => 'required|email',
-            'password' => 'required',
+            'password' => 'required'
         ]);
-
-        $user = User::where('email', $request->email)->first();
-
-        if (! $user || ! Hash::check($request->password, $user->password)) {
-            return response()->json(['message' => 'Invalid credentials'], 401);
+        
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors()
+            ], 422);
         }
-
-        $token = $user->createToken('api-token')->plainTextToken;
-
+        
+        if (!Auth::attempt($request->only('email', 'password'))) {
+            return response()->json([
+                'message' => 'Pogrešni kredencijali'
+            ], 401);
+        }
+        
+        $user = User::where('email', $request->email)->first();
+        $token = $user->createToken('auth_token')->plainTextToken;
+        
         return response()->json([
-            'user' => $user,
-            'token' => $token,
+            'message' => 'Uspešno prijavljivanje',
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+            'user' => $user
         ]);
     }
 
     public function logout(Request $request)
     {
-        $token = $request->user()?->currentAccessToken();
-        if ($token) {
-            $token->delete();
-        }
-
-        return response()->json(['message' => 'Logged out']);
-    }
-
-    public function me(Request $request)
-    {
-        return response()->json($request->user());
+        $request->user()->currentAccessToken()->delete();
+        
+        return response()->json([
+            'message' => 'Uspešno odjavljivanje'
+        ]);
     }
 
 }
