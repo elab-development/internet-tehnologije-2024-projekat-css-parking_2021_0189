@@ -30,7 +30,27 @@ class LevelController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|string|max:255',
-            'order' => 'required|integer|unique:levels,order'
+            'order' => 'required|integer|unique:levels,order',
+            'description' => 'nullable|string',
+            'base_color' => 'nullable|string|max:7',
+            'player_car' => 'required|array',
+            'player_car.x' => 'required|integer',
+            'player_car.y' => 'required|integer',
+            'player_car.width' => 'required|integer',
+            'player_car.height' => 'required|integer',
+            'player_car.rotate' => 'required|numeric',
+            'player_car.color' => 'required|string|max:7',
+            'parking_spots' => 'required|array',
+            'parking_spots.*.id' => 'required|integer',
+            'parking_spots.*.x' => 'required|integer',
+            'parking_spots.*.y' => 'required|integer',
+            'parking_spots.*.width' => 'required|integer',
+            'parking_spots.*.height' => 'required|integer',
+            'parking_spots.*.rotate' => 'required|numeric',
+            'parking_spots.*.skew' => 'nullable|numeric',
+            'parking_spots.*.scale' => 'nullable|numeric',
+            'parking_spots.*.is_target' => 'required|boolean',
+            'parking_spots.*.color' => 'required|string|max:7'
         ]);
         
         $level = Level::create($validated);
@@ -77,8 +97,28 @@ class LevelController extends Controller
         }
         
         $validated = $request->validate([
-            'title' => 'sometimes|string|max:255',
-            'order' => 'sometimes|integer|unique:levels,order,' . $level->id
+            'title' => 'required|string|max:255',
+            'order' => 'required|integer|unique:levels,order',
+            'description' => 'nullable|string',
+            'base_color' => 'nullable|string|max:7',
+            'player_car' => 'required|array',
+            'player_car.x' => 'required|integer',
+            'player_car.y' => 'required|integer',
+            'player_car.width' => 'required|integer',
+            'player_car.height' => 'required|integer',
+            'player_car.rotate' => 'required|numeric',
+            'player_car.color' => 'required|string|max:7',
+            'parking_spots' => 'required|array',
+            'parking_spots.*.id' => 'required|integer',
+            'parking_spots.*.x' => 'required|integer',
+            'parking_spots.*.y' => 'required|integer',
+            'parking_spots.*.width' => 'required|integer',
+            'parking_spots.*.height' => 'required|integer',
+            'parking_spots.*.rotate' => 'required|numeric',
+            'parking_spots.*.skew' => 'nullable|numeric',
+            'parking_spots.*.scale' => 'nullable|numeric',
+            'parking_spots.*.is_target' => 'required|boolean',
+            'parking_spots.*.color' => 'required|string|max:7'
         ]);
         
         $level->update($validated);
@@ -109,6 +149,39 @@ class LevelController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Level uspešno obrisan'
+        ]);
+    }
+
+    public function complete(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'duration' => 'required|integer|min:1',
+        ]);
+        
+        $level = Level::find($id);
+        
+        if (!$level) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Level nije pronađen'
+            ], 404);
+        }
+        
+        // Sačuvaj ili ažuriraj napredak korisnika
+        $userLevel = UserLevel::updateOrCreate(
+            [
+                'user_id' => $request->user()->id,
+                'level_id' => $level->id
+            ],
+            [
+                'duration' => $validated['duration']
+            ]
+        );
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Nivo uspešno završen',
+            'data' => $userLevel
         ]);
     }
 }

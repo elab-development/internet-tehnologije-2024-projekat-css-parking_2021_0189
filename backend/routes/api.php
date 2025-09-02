@@ -17,12 +17,16 @@ Route::get('/levels/{id}', [LevelController::class, 'show']);
 
 // Zasticene korisnike
 Route::middleware(['auth:sanctum'])->group(function () {
+
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
     
     Route::post('/logout', [AuthController::class, 'logout']);
     
+    // Zavrsavanje levela
+    Route::post('/levels/{id}/complete', [LevelController::class, 'complete']);
+
     // User rute
     Route::get('/admin/users', [UserController::class, 'index']);
     Route::delete('/admin/users/{id}', [UserController::class, 'destroy']);
