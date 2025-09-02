@@ -23,6 +23,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     
     Route::post('/logout', [AuthController::class, 'logout']);
     
+    // User rute
+    Route::get('/admin/users', [UserController::class, 'index']);
+    Route::delete('/admin/users/{id}', [UserController::class, 'destroy']);
     
     // UserLevel rute
     Route::get('/user-levels', [UserLevelController::class, 'showUserLevels']);
