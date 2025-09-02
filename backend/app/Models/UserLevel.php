@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserLevel extends Model
 {
-    use HasFactory;
+    //use HasFactory;
 
     protected $fillable = [
         'user_id',
