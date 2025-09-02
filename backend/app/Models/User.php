@@ -52,4 +52,18 @@ class User extends Authenticatable
         return $this->hasMany(UserLevel::class);
     }
 
+    public function levels()
+    {
+        return $this->belongsToMany(Level::class, 'user_levels')
+                    ->withPivot('duration')
+                    ->withTimestamps();
+    }
+
+    /**
+     * Provera da li je korisnik admin
+     */
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
 }

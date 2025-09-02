@@ -23,4 +23,9 @@ class UserLevel extends Model
     {
         return $this->belongsTo(Level::class);
     }
+
+    public function getIsCompletedAttribute()
+    {
+        return !is_null($this->duration);
+    }
 }
