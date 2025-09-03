@@ -1,7 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import Button from '../components/UI/Button';
 import { FaCar } from 'react-icons/fa';
 
-const Home = ({ onNavigate }) => {
+const Home = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen px-6 bg-gradient-to-b from-blue-100 to-blue-200 text-center font-custom">
       
@@ -20,19 +23,19 @@ const Home = ({ onNavigate }) => {
       
       <div className="flex flex-col gap-6 w-full max-w-sm justify-center">
         <Button
-          onClick={() => onNavigate('login')}
+          onClick={() => navigate('/login')}
           className="login"
         >
           <span>Login</span>
         </Button>
         <Button
-          onClick={() => onNavigate('register')}
+          onClick={() => navigate('/register')}
           className="register"
         >
           <span>Registruj se</span>
         </Button>
         <Button
-          onClick={() => onNavigate('guest')}
+          onClick={() => navigate('/guest')}
           className="guest"
         >
           Nastavi kao gost
