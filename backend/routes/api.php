@@ -6,7 +6,7 @@ use App\Http\Controllers\LevelController;
 use App\Http\Controllers\UserLevelController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\API\AuthController;
-
+use App\Http\Controllers\API\ColorController;
 
 // Javne rute
 Route::post('/login', [AuthController::class, 'login']);
@@ -47,5 +47,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/levels/{id}', [LevelController::class, 'update']);
         Route::delete('/levels/{id}', [LevelController::class, 'destroy']);
         Route::get('/admin/user-levels', [UserLevelController::class, 'index']);
+        Route::post('/color-palette', [ColorController::class, 'generatePalette']);
     });
 });
