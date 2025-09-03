@@ -1,34 +1,34 @@
-const Button = ({ 
-  children, 
-  variant = 'primary', 
-  size = 'medium', 
-  onClick, 
-  disabled = false,
-  type = 'button'
-}) => {
-  const baseClasses = 'rounded font-medium transition-colors focus:outline-none focus:ring-2';
-  const variants = {
-    primary: 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500',
-    secondary: 'bg-gray-200 text-gray-800 hover:bg-gray-300 focus:ring-gray-500',
-    danger: 'bg-red-600 text-white hover:bg-red-700 focus:ring-red-500'
-  };
-  const sizes = {
-    small: 'px-3 py-1 text-sm',
-    medium: 'px-4 py-2 text-base',
-    large: 'px-6 py-3 text-lg'
-  };
+import React from 'react';
 
-  const classes = `${baseClasses} ${variants[variant]} ${sizes[size]} ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`;
+const Button = ({ children, onClick, type = 'button', className }) => {
+  // Zajedničke klase za sve dugmiće
+  const baseClasses = 'w-full py-5 text-lg rounded-2xl shadow-lg transform hover:scale-105 transition-all flex items-center justify-center space-x-2 text-white';
+
+  // Dinamičke klase zasnovane na tipu dugmića
+  let specificClasses = '';
+  switch (className) {
+    case 'login':
+      specificClasses = 'bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700';
+      break;
+    case 'register':
+      specificClasses = 'bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700';
+      break;
+    case 'guest':
+      specificClasses = 'bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700';
+      break;
+    default:
+      specificClasses = className;
+  }
 
   return (
-    <button 
+    <button
       type={type}
-      className={classes}
+      className={`${baseClasses} ${specificClasses}`}
       onClick={onClick}
-      disabled={disabled}
     >
       {children}
     </button>
   );
 };
+
 export default Button;
