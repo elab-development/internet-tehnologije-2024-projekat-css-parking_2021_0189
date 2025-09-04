@@ -1,6 +1,4 @@
-import React from 'react';
-
-const Button = ({ children, onClick, type = 'button', className }) => {
+const Button = ({ children, type = 'button', className, ...props }) => {
   // Zajedničke klase za sve dugmiće
   const baseClasses = 'w-full py-5 text-lg rounded-2xl shadow-lg transform hover:scale-105 transition-all flex items-center justify-center space-x-2 text-white';
 
@@ -24,7 +22,7 @@ const Button = ({ children, onClick, type = 'button', className }) => {
     <button
       type={type}
       className={`${baseClasses} ${specificClasses}`}
-      onClick={onClick}
+      {...props}
     >
       {children}
     </button>
