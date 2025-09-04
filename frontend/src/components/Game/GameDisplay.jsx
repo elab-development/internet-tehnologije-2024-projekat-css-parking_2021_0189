@@ -11,8 +11,7 @@ import Car from './Car.jsx';
 */
 export default function GameDisplay({ level, userCss = '', playgroundRef, playerRef, targetRef, isCorrect = false }) {
   useEffect(() => {
-    console.log(JSON.parse(JSON.stringify(player)), player.color)
-    // CSS transform is applied inline on player element
+    
   }, [userCss]);
 
   const spots = Array.isArray(level.parking_spots) ? level.parking_spots : [];
@@ -23,38 +22,50 @@ export default function GameDisplay({ level, userCss = '', playgroundRef, player
       className="relative overflow-hidden rounded-xl border-4 border-gray-800 w-full mx-auto aspect-video"
       style={{ backgroundColor: level.base_color }}
     >
-      {spots.map((spot) => (
-        <div
-          key={spot.id}
-          ref={spot.is_target ? targetRef : null}
-          data-target={spot.is_target ? "true" : "false"}
-          className="absolute w-[10%] h-[15%] rounded-md transition-all parking-spot"
-          style={{
-            left: `${spot.x}%`,
-            top: `${spot.y}%`,
-            transform: `rotate(${spot.rotate ?? 0}deg) skew(${spot.skew ?? 0}deg)`,
-            border: `2px solid ${isCorrect && spot.is_target ? 'green' : ('white' || 'black')}`,
-            zIndex: 1
-          }}
-        >
+      {spots.map((spot) => {
+        const isTargetAndCorrect = isCorrect && spot.is_target;
+
+        return (
           <div
-            className="w-[80%] h-[80%] absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-md border-4 border-dashed"
+            key={spot.id}
+            ref={spot.is_target ? targetRef : null}
+            data-target={spot.is_target ? "true" : "false"}
+            className="absolute transition-all"
             style={{
-              borderColor: isCorrect && spot.is_target ? 'green' : ('white' || 'blue'),
-              backgroundColor: isCorrect && spot.is_target ? 'rgba(0,255,0,0.2)' : 'transparent',
+              left: `${spot.x}%`,
+              top: `${spot.y}%`,
+              width: `${spot.width}%`,
+              height: `${spot.height}%`,
+              transform: `rotate(${spot.rotate ?? 0}deg) skew(${spot.skew ?? 0}deg)`,
+              border: `2px solid ${isTargetAndCorrect ? 'green' : 'white'}`,
+              boxSizing: 'border-box',
+              zIndex: 1,
             }}
-          />
-        </div>
-      ))}
+          >
+            {/* Ako nije target, stavimo Car komponentu unutra */}
+            {!spot.is_target && (
+              <Car
+                color={spot.color}
+                className="w-full h-full rounded-none"
+                style={{ width: '100%', height: '100%' }}
+              />
+            )}
+            {/* Target je prazan, border menja boju kada je isCorrect */}
+          </div>
+        );
+      })}
+
 
       <Car
-        color = {player.color || '#d9ff00ff'}
+        color={player.color || '#d9ff00ff'}
         ref={playerRef}
-        className="absolute w-[8%] h-[12%] rounded-md transition-transform player-car"
+        className="absolute transition-transform player-car"
         style={{
           left: `${player.x}%`,
           top: `${player.y}%`,
-          transform: userCss || 'none',
+          width: `${player.width}%`,
+          height: `${player.height}%`,
+          transform: `${userCss || ''} rotate(${player.rotate ?? 0}deg)`,
           zIndex: 3
         }}
       />

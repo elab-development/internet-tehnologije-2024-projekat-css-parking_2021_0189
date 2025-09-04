@@ -163,7 +163,7 @@ export default function Level() {
           <div>
             <GameDisplay
               level={level}
-              userCss={parseTransformValue(userCss)}
+              userCss={userCss}
               playgroundRef={playgroundRef}
               playerRef={playerRef}
               targetRef={targetRef}
