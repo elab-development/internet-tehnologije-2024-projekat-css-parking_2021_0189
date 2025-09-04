@@ -5,11 +5,10 @@ import Car from './Car.jsx';
  Props:
   - level: { playerCar, fixedCars, parkingSpots, name, description }
   - userCss: string (transform value like "translateX(10px)" or "rotate(30deg)")
-  - playgroundRef, playerRef, targetRef: refs
-  - palette: array
+  - playgroundRef, playerRef, targetRef, playerSvgRef: refs
   - isCorrect: bool
 */
-export default function GameDisplay({ level, userCss = '', playgroundRef, playerRef, targetRef, isCorrect = false }) {
+export default function GameDisplay({ level, userCss = '', playgroundRef, playerRef, playerSvgRef, targetRef, isCorrect = false }) {
   useEffect(() => {
     
   }, [userCss]);
@@ -57,16 +56,19 @@ export default function GameDisplay({ level, userCss = '', playgroundRef, player
 
 
       <Car
-        color={player.color || '#d9ff00ff'}
+        color={player.color}
         ref={playerRef}
+        svgRef={playerSvgRef}
         className="absolute transition-transform player-car"
         style={{
+
           left: `${player.x}%`,
           top: `${player.y}%`,
           width: `${player.width}%`,
           height: `${player.height}%`,
           transform: `${userCss || ''} rotate(${player.rotate ?? 0}deg)`,
-          zIndex: 3
+          zIndex: 3,
+          border: '2px solid transparent',
         }}
       />
     </div>

@@ -21,6 +21,7 @@ export default function Level() {
 
   const playgroundRef = useRef(null);
   const playerRef = useRef(null);
+  const playerSvgRef = useRef(null);
   const targetRef = useRef(null);
   const startTimeRef = useRef(Date.now());
 
@@ -49,13 +50,6 @@ export default function Level() {
     return () => { mounted = false; };
   }, [levelOrder]);
 
-  const parseTransformValue = (cssString) => {
-    if (!cssString) return '';
-    const transformRegex = /transform:\s*([^;]+);?/i;
-    const match = cssString.match(transformRegex);
-    if (match && match[1]) return match[1].trim();
-    return cssString.trim();
-  };
 
   const isFullyContained = (el1, el2) => {
     if (!el1 || !el2) return false;
@@ -71,7 +65,7 @@ export default function Level() {
 
   const handleCheck = () => {
     if (!level) return;
-    const playerEl = playerRef.current;
+    const playerEl = playerSvgRef.current;
     // try to find target inside playground if ref not attached
     const targetEl = targetRef.current || playgroundRef.current?.querySelector('[data-target="true"]');
     if (!playerEl || !targetEl) {
@@ -166,6 +160,7 @@ export default function Level() {
               userCss={userCss}
               playgroundRef={playgroundRef}
               playerRef={playerRef}
+              playerSvgRef={playerSvgRef}
               targetRef={targetRef}
               isCorrect={isCorrect}
             />
