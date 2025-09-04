@@ -22,53 +22,73 @@ class LevelFactory extends Factory
             'description' => fake()->sentence(),
             'base_color' => fake()->hexColor(),
             'player_car' => [
-                'x' => 50,
-                'y' => 50,
-                'width' => 60,
-                'height' => 30,
+                'x' => 0,
+                'y' => 0,
+                'width' => 20,
+                'height' => 15,
                 'rotate' => 0,
-                'color' => '#ff00ffff'
+                'color' => fake()->hexColor()
             ],
             'parking_spots' => [
                 [
                     'id' => 1,
-                    'x' => 200,
-                    'y' => 100,
-                    'width' => 70,
-                    'height' => 40,
+                    'x' => 75,
+                    'y' => 0,
+                    'width' => 20,
+                    'height' => 15,
                     'rotate' => 0,
                     'is_target' => true,
-                    'color' => '#000000'
+                    'color' => fake()->hexColor()
                 ],
                 [
                     'id' => 2,
-                    'x' => 300,
-                    'y' => 100,
-                    'width' => 70,
-                    'height' => 40,
+                    'x' => 75,
+                    'y' => 15,
+                    'width' => 20,
+                    'height' => 15,
                     'rotate' => 0,
                     'is_target' => false,
-                    'color' => '#1E90FF'
+                    'color' => fake()->hexColor()
                 ],
                 [
                     'id' => 3,
-                    'x' => 400,
-                    'y' => 100,
-                    'width' => 70,
-                    'height' => 40,
+                    'x' => 75,
+                    'y' => 30,
+                    'width' => 20,
+                    'height' => 15,
                     'rotate' => 0,
                     'is_target' => false,
-                    'color' => '#26b349ff'
+                    'color' => fake()->hexColor()
                 ],
                 [
                     'id' => 4,
-                    'x' => 500,
-                    'y' => 100,
-                    'width' => 70,
-                    'height' => 40,
+                    'x' => 75,
+                    'y' => 45,
+                    'width' => 20,
+                    'height' => 15,
                     'rotate' => 0,
                     'is_target' => false,
-                    'color' => '#e5e90fff'
+                    'color' => fake()->hexColor()
+                ],
+                [
+                    'id' => 5,
+                    'x' => 75,
+                    'y' => 60,
+                    'width' => 20,
+                    'height' => 15,
+                    'rotate' => 0,
+                    'is_target' => false,
+                    'color' => fake()->hexColor()
+                ],
+                [
+                    'id' => 6,
+                    'x' => 75,
+                    'y' => 75,
+                    'width' => 20,
+                    'height' => 15,
+                    'rotate' => 0,
+                    'is_target' => false,
+                    'color' => fake()->hexColor()
                 ]
             ]
         ];
