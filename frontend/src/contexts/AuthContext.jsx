@@ -73,13 +73,25 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      const response = await axios.post('/register', userData);
+      const payload = { ...userData };
+      // Ako postoji guestProgress, pošalji ga serveru
+      if (Object.keys(guestProgress).length > 0) {
+        payload.progress = Object.entries(guestProgress).map(([levelId, duration]) => ({
+          level_id: levelId,
+          duration
+        }));
+      }
+      const response = await axios.post('/register', payload);
       const { user, access_token } = response.data;
       
       setUser(user);
       localStorage.setItem('token', access_token);
       localStorage.setItem('user', JSON.stringify(user));
       axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
+
+      // Očisti guest progress nakon registracije
+      setGuestProgress({});
+      localStorage.removeItem('guestProgress');
       
       return { success: true };
     } catch (error) {
