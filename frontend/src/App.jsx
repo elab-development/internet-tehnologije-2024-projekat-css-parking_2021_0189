@@ -4,9 +4,9 @@ import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import { AuthProvider } from './contexts/AuthContext';
-import Navbar from './components/UI/Navbar';
 import ProtectedRoute from './components/routes/ProtectedRoute';
 import PublicRoute from './components/routes/PublicRoute';
+import Levels from './pages/Levels';
 
 function App() {
   return (
@@ -30,7 +30,7 @@ function App() {
               </PublicRoute>
               }/>
             <Route path="/levels" element={
-                <Navbar/>
+                <Levels/>
               }/>
           </Routes>
         </div>

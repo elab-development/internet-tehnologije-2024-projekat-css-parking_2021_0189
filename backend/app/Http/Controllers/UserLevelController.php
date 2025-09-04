@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\UserLevel;
 use App\Models\User;
+use App\Models\Level;
 
 class UserLevelController extends Controller
 {
