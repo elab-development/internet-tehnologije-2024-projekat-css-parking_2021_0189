@@ -91,15 +91,14 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    setUser(null);
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    delete axios.defaults.headers.common['Authorization'];
-    
     // Pozovi API za logout
     axios.post('/logout').catch(error => {
       console.error('Greška pri odjavljivanju:', error);
     });
+    setUser(null);
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    delete axios.defaults.headers.common['Authorization'];
   };
 
   const saveGuestProgress = (levelId, duration) => {

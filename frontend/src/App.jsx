@@ -4,6 +4,7 @@ import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import { AuthProvider } from './contexts/AuthContext';
+import Navbar from './components/UI/Navbar';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             <Route path="/" element={ <LandingPage/> }/>
             <Route path="/login" element={ <Login/> }/>
             <Route path="/register" element={ <Register/> }/>
+            <Route path="/dashboard" element={ <Navbar/> }/>
           </Routes>
         </div>
       </BrowserRouter>

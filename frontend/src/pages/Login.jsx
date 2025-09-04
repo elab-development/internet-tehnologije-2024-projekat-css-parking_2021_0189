@@ -21,7 +21,7 @@ const Login = () => {
       const result = await login(email, password);
       
       if (result.success) {
-          navigate('/levels');
+          navigate('/dashboard');
       } else {
           // Prikaz greške
         if (typeof result.message === 'object') {

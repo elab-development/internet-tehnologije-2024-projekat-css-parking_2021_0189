@@ -35,7 +35,7 @@ const Home = () => {
           <span>Registruj se</span>
         </Button>
         <Button
-          onClick={() => navigate('/guest')}
+          onClick={() => navigate('/dashboard')}
           className="guest"
         >
           Nastavi kao gost
