@@ -90,12 +90,22 @@ export default function Level() {
     }
   };
 
-  const handleNext = () => {
-    // naive next: assume API returns next_id or use numeric increment
+  const handleNext = async () => {
     if (!level) return navigate('/levels');
-    // fallback: try increment numeric id
-    const nextId = String(Number(levelOrder) + 1);
-    navigate(`/level/${nextId}`);
+    
+    const nextOrder = String(Number(levelOrder) + 1);
+    try {
+      // pokušavaš da fetchuješ sledeći level po order-u
+      const res = await axios.get(`/levels/order/${nextOrder}`); // tvoj endpoint getByOrder
+      if (res.data.success && res.data.data) {
+        navigate(`/level/${nextOrder}`);
+      } else {
+        navigate('/levels');
+      }
+    } catch (err) {
+      // ako ne postoji ili je greška → vraćamo se na /levels
+      navigate('/levels');
+    }
   };
 
   if (loading) return <div className="p-6">Učitavanje nivoa…</div>;
