@@ -99,14 +99,14 @@ export default function Level() {
   const handleNext = () => {
     // naive next: assume API returns next_id or use numeric increment
     if (!level) return navigate('/levels');
-    if (level.next_id) return navigate(`/level/${level.next_id}`);
     // fallback: try increment numeric id
     const nextId = String(Number(levelOrder) + 1);
     navigate(`/level/${nextId}`);
   };
 
   if (loading) return <div className="p-6">Učitavanje nivoa…</div>;
-  if (error || !level) return <div className="p-6 text-red-600">{error || 'Greška pri učitavanju nivoa'}</div>;
+  if (error) return <div className="p-6 text-red-600">{error || 'Greška pri učitavanju nivoa'}</div>;
+  if (!level) return;
 
   return (
     <div className='min-h-screen bg-gradient-to-b from-blue-100 to-blue-200 text-center font-custom pt-20'>
@@ -167,7 +167,6 @@ export default function Level() {
               playgroundRef={playgroundRef}
               playerRef={playerRef}
               targetRef={targetRef}
-              palette={[ level.base_color ?? level.baseColor ?? '#E5E7EB' ]}
               isCorrect={isCorrect}
             />
 

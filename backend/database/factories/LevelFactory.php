@@ -21,15 +21,15 @@ class LevelFactory extends Factory
             'order' => fake()->unique()->numberBetween(1, 20),
             'description' => fake()->sentence(),
             'base_color' => fake()->hexColor(),
-            'player_car' => json_encode([
+            'player_car' => [
                 'x' => 50,
                 'y' => 50,
                 'width' => 60,
                 'height' => 30,
                 'rotate' => 0,
-                'color' => '#FF6347'
-            ]),
-            'parking_spots' => json_encode([
+                'color' => '#ff00ffff'
+            ],
+            'parking_spots' => [
                 [
                     'id' => 1,
                     'x' => 200,
@@ -70,7 +70,7 @@ class LevelFactory extends Factory
                     'is_target' => false,
                     'color' => '#e5e90fff'
                 ]
-            ])
+            ]
         ];
     }
 }
