@@ -5,6 +5,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import { AuthProvider } from './contexts/AuthContext';
 import Navbar from './components/UI/Navbar';
+import ProtectedRoute from './components/routes/ProtectedRoute';
+import PublicRoute from './components/routes/PublicRoute';
 
 function App() {
   return (
@@ -12,10 +14,24 @@ function App() {
       <BrowserRouter>
         <div className="App">
           <Routes>
-            <Route path="/" element={ <LandingPage/> }/>
-            <Route path="/login" element={ <Login/> }/>
-            <Route path="/register" element={ <Register/> }/>
-            <Route path="/dashboard" element={ <Navbar/> }/>
+            <Route path="/" element={
+              <PublicRoute>
+                <LandingPage/> 
+              </PublicRoute>
+              }/>
+            <Route path="/login" element={
+              <PublicRoute>
+                <Login/>
+              </PublicRoute>
+              }/>
+            <Route path="/register" element={
+              <PublicRoute>
+                <Register/>
+              </PublicRoute>
+              }/>
+            <Route path="/levels" element={
+                <Navbar/>
+              }/>
           </Routes>
         </div>
       </BrowserRouter>
