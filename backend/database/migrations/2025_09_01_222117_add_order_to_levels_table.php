@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('levels', function (Blueprint $table) {
-            $table->integer('order')->default(1)->unique();;
+            $table->integer('order')->default(1)->unique();
         });
     }
 

@@ -7,6 +7,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import ProtectedRoute from './components/routes/ProtectedRoute';
 import PublicRoute from './components/routes/PublicRoute';
 import Levels from './pages/Levels';
+import Level from './pages/Level';
 
 function App() {
   return (
@@ -31,6 +32,9 @@ function App() {
               }/>
             <Route path="/levels" element={
                 <Levels/>
+              }/>
+            <Route path="/level/:levelOrder" element={
+                <Level/>
               }/>
           </Routes>
         </div>

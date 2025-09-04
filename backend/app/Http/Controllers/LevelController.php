@@ -83,6 +83,23 @@ class LevelController extends Controller
         ]);
     }
 
+    public function getByOrder(string $order)
+    {
+        $level = Level::where('order', $order)->first();
+        
+        if (!$level) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Level nije pronađen'
+            ], 404);
+        }
+        
+        return response()->json([
+            'success' => true,
+            'data' => $level
+        ]);
+    }
+
     /**
      * Update the specified resource in storage.
      */

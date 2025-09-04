@@ -15,6 +15,7 @@ Route::post('/register', [AuthController::class, 'register']);
 // Level rute
 Route::get('/levels', [LevelController::class, 'index']);
 Route::get('/levels/{id}', [LevelController::class, 'show']);
+Route::get('/levels/order/{order}', [LevelController::class, 'getByOrder']);
 
 // Zasticene korisnike
 Route::middleware(['auth:sanctum'])->group(function () {

@@ -45,8 +45,8 @@ const Levels = () => {
     fetchLevels();
   }, [user, guestProgress]);
 
-  const handleLevelClick = (levelId) => {
-    navigate(`/level/${levelId}`);
+  const handleLevelClick = (levelOrder) => {
+    navigate(`/level/${levelOrder}`);
   };
 
   return (
@@ -57,7 +57,7 @@ const Levels = () => {
                 <div 
                 key={level.id} 
                 className="relative bg-blue-500 text-white rounded-2xl p-6 flex items-center justify-center cursor-pointer hover:scale-105 transform transition"
-                onClick={() => handleLevelClick(level.id)}
+                onClick={() => handleLevelClick(level.order)}
                 >
                     <span className="text-xl font-bold">{level.order}</span>
 
