@@ -34,7 +34,7 @@ export default function Level() {
     axios.get(`/levels/order/${levelOrder}`)
       .then(res => {
         if (!mounted) return;
-        const data = res.data.data ?? res.data ?? res; // tolerate different API shapes
+        const data = res.data.data ?? res.data ?? res;
         setLevel(data);
         // reset editor & feedback
         setUserCss(data.initialCss || '');
@@ -55,7 +55,6 @@ export default function Level() {
     if (!el1 || !el2) return false;
     const r1 = el1.getBoundingClientRect();
     const r2 = el2.getBoundingClientRect();
-    // require player entirely inside target with small tolerance
     const tol = 1; // px tolerance
     return (r1.left + tol) >= r2.left &&
            (r1.top + tol) >= r2.top &&
@@ -117,14 +116,14 @@ export default function Level() {
       <Navbar />
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-6">
-          <div>
-            <h1 className="text-2xl font-bold">{level.title}</h1>
-            {level.description && <p className="text-sm text-gray-600">{level.description}</p>}
+          <div className="text-center mb-8">
+            <h1 className="text-3xl font-bold text-gray-800">{level.title}</h1>
+            {level.description && <p className="mt-2 text-lg text-gray-600 max-w-2xl">{level.description}</p>}
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
-          {/* left: editor + action buttons directly below it */}
+          
           <div className="flex flex-col gap-4">
             <CssEditor
               userCss={userCss}
@@ -156,14 +155,14 @@ export default function Level() {
               )}
             </div>
 
-            {/* small feedback text under the buttons */}
+            {/* feedback text under the buttons */}
             <div className="text-sm text-left text-gray-600">
               {isCorrect && <span className="text-green-600 font-medium">Uspešno parkiranje!</span>}
               {isIncorrect && <span className="text-red-600 font-medium">Pokušaj ponovo!</span>}
             </div>
           </div>
 
-          {/* right: game display */}
+          {/* game display */}
           <div>
             <GameDisplay
               level={level}

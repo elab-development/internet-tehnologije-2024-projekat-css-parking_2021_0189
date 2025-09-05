@@ -35,10 +35,10 @@ export default function GameDisplay({ level, userCss = '', playgroundRef, player
               top: `${spot.y}%`,
               width: `${spot.width}%`,
               height: `${spot.height}%`,
-              transform: `rotate(${spot.rotate ?? 0}deg) skew(${spot.skew ?? 0}deg)`,
+              transform: `rotate(${spot.rotate ?? 0}deg) skew(${spot.skew?.x ?? 0}deg, ${spot.skew?.y ?? 0}deg) scale(${player.scale?.x ?? 1}, ${player.scale?.y ?? 1})`,
               border: `2px solid ${isTargetAndCorrect ? 'green' : 'white'}`,
               boxSizing: 'border-box',
-              zIndex: 1,
+              zIndex: spot.is_target ? 2 : 1
             }}
           >
             {/* Ako nije target, stavimo Car komponentu unutra */}
@@ -46,7 +46,7 @@ export default function GameDisplay({ level, userCss = '', playgroundRef, player
               <Car
                 color={spot.color}
                 className="w-full h-full rounded-none"
-                style={{ width: '100%', height: '100%' }}
+                style={{ width: '100%', height: '100%', }}
               />
             )}
             {/* Target je prazan, border menja boju kada je isCorrect */}
@@ -66,7 +66,7 @@ export default function GameDisplay({ level, userCss = '', playgroundRef, player
           top: `${player.y}%`,
           width: `${player.width}%`,
           height: `${player.height}%`,
-          transform: `${userCss || ''} rotate(${player.rotate ?? 0}deg)`,
+          transform: `${userCss || ''} rotate(${player.rotate ?? 0}deg) scale(${player.scale?.x ?? 1}, ${player.scale?.y ?? 1})`,
           zIndex: 3,
           border: '2px solid transparent',
         }}

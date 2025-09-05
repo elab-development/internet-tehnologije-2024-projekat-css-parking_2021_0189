@@ -26,11 +26,12 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->create();
 
         // Kreiranje levela
-        Level::factory(5)->create();
+        //Level::factory(5)->create();
+        $this->call(LevelSeeder::class);
 
         // Kreiranje user_level veza
         foreach (User::all() as $user) {
-            foreach (Level::all()->random(3) as $level) {
+            foreach (Level::all()->random(2) as $level) {
                 UserLevel::create([
                     'user_id' => $user->id,
                     'level_id' => $level->id,
