@@ -25,6 +25,10 @@ export default function Level() {
   const targetRef = useRef(null);
   const startTimeRef = useRef(Date.now());
 
+  // timer state + interval ref
+  const [elapsed, setElapsed] = useState(0);
+  const timerRef = useRef(null);
+
   useEffect(() => {
     let mounted = true;
     setLoading(true);
@@ -40,16 +44,36 @@ export default function Level() {
         setUserCss(data.initialCss || '');
         setIsCorrect(false);
         setIsIncorrect(false);
+        // reset timer
         startTimeRef.current = Date.now();
+        setElapsed(0);
+        if (timerRef.current) {
+          clearInterval(timerRef.current);
+        }
+        timerRef.current = setInterval(() => {
+          setElapsed(Math.floor((Date.now() - startTimeRef.current) / 1000));
+        }, 500);
       })
       .catch(err => {
         setError('Nivo nije pronađen.');
       })
       .finally(() => setLoading(false));
 
-    return () => { mounted = false; };
+    return () => {
+      mounted = false;
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+    };
   }, [levelOrder]);
-
+ 
+  // helper to format seconds -> MM:SS
+  const formatTime = (s) => {
+    const mm = Math.floor(s / 60);
+    const ss = s % 60;
+    return `${mm}:${String(ss).padStart(2, '0')}`;
+  };
 
   const isFullyContained = (el1, el2) => {
     if (!el1 || !el2) return false;
@@ -78,6 +102,12 @@ export default function Level() {
 
     if (ok) {
       const durationSeconds = Math.max(1, Math.round((Date.now() - startTimeRef.current) / 1000));
+      // stop timer and set final elapsed
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
+      setElapsed(durationSeconds);
       // save progress for guest or logged user
       if (user) {
         // try to POST progress to backend; ignore errors
@@ -115,10 +145,18 @@ export default function Level() {
     <div className='min-h-screen bg-gradient-to-b from-blue-100 to-blue-200 text-center font-custom pt-20'>
       <Navbar />
       <div className="max-w-7xl mx-auto">
-        <div className="flex items-center justify-between mb-6">
-          <div className="text-center mb-8">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-6">
+          <div className="text-center md:text-left">
             <h1 className="text-3xl font-bold text-gray-800">{level.title}</h1>
             {level.description && <p className="mt-2 text-lg text-gray-600 max-w-2xl">{level.description}</p>}
+          </div>
+
+          {/* Timer sada u headeru — stoji uz description, ne pomera grid ispod */}
+          <div className="mt-4 md:mt-0 md:ml-6">
+            <div className="inline-flex items-center gap-3 bg-white/90 border border-blue-100 px-4 py-2 rounded-full shadow-md">
+              <span className="text-sm text-gray-600">Vreme:</span>
+              <span className="text-lg font-mono font-semibold text-blue-700">{formatTime(elapsed)}</span>
+            </div>
           </div>
         </div>
 
@@ -162,8 +200,8 @@ export default function Level() {
             </div>
           </div>
 
-          {/* game display */}
-          <div>
+          {/* game display + timer (above the display, aligned to the right on desktop) */}
+          <div className="flex flex-col items-center md:items-end">
             <GameDisplay
               level={level}
               userCss={userCss}
@@ -173,7 +211,6 @@ export default function Level() {
               targetRef={targetRef}
               isCorrect={isCorrect}
             />
-
           </div>
         </div>
       </div>

@@ -45,30 +45,37 @@ class UserLevelController extends Controller
             'level_id' => 'required|exists:levels,id',
             'duration' => 'nullable|integer|min:0' // u sekundama
         ]);
-        
+
+        $userId = $request->user()->id;
+
         // Provera da li već postoji veza za ovog korisnika i level
-        $existingUserLevel = UserLevel::where('user_id', $request->user()->id)
+        $existingUserLevel = UserLevel::where('user_id', $userId)
             ->where('level_id', $validated['level_id'])
             ->first();
-        
+
         if ($existingUserLevel) {
-            // Ako postoji, ažuriraj duration
-            $existingUserLevel->update(['duration' => $validated['duration']]);
-            
+            // Ažuriraj samo ako nema duration ili je novi rezultat bolji (manji)
+            $newDuration = $validated['duration'] ?? null;
+            if (!is_null($newDuration)) {
+                if (is_null($existingUserLevel->duration) || $newDuration < $existingUserLevel->duration) {
+                    $existingUserLevel->update(['duration' => $newDuration]);
+                }
+            }
+
             return response()->json([
                 'success' => true,
                 'message' => 'User-Level veza uspešno ažurirana',
                 'data' => $existingUserLevel
             ]);
         }
-        
+
         // Ako ne postoji, kreiraj novu
         $userLevel = UserLevel::create([
-            'user_id' => $request->user()->id,
+            'user_id' => $userId,
             'level_id' => $validated['level_id'],
-            'duration' => $validated['duration']
+            'duration' => $validated['duration'] ?? null
         ]);
-        
+
         return response()->json([
             'success' => true,
             'message' => 'User-Level veza uspešno kreirana',

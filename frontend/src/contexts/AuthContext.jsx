@@ -114,9 +114,19 @@ export const AuthProvider = ({ children }) => {
   };
 
   const saveGuestProgress = (levelId, duration) => {
-    const newProgress = { ...guestProgress, [levelId]: duration };
-    setGuestProgress(newProgress);
-    localStorage.setItem('guestProgress', JSON.stringify(newProgress));
+    const id = String(levelId);
+    const dur = Number(duration);
+    if (Number.isNaN(dur)) return false;
+
+    const prev = guestProgress[id];
+    // Ako nema prethodnog rezultata ili je novi bolji (manji), sačuvaj
+    if (prev === undefined || dur < Number(prev)) {
+      const newProgress = { ...guestProgress, [id]: dur };
+      setGuestProgress(newProgress);
+      localStorage.setItem('guestProgress', JSON.stringify(newProgress));
+      return true;
+    }
+    return false;
   };
 
   const deleteAccount = async () => {
