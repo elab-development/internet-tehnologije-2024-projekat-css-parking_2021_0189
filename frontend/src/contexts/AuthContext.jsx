@@ -119,14 +119,46 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('guestProgress', JSON.stringify(newProgress));
   };
 
-  const value = {
-    user,
-    login,
-    register,
-    logout,
-    guestProgress,
-    saveGuestProgress
+  const deleteAccount = async () => {
+    try {
+      // prvo pokušaj standardnu (baseURL + /user)
+      await axios.delete('/user');
+      setUser(null);
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      delete axios.defaults.headers.common['Authorization'];
+    } catch (err) {
+      throw err;
+    }
   };
+
+  // Ažuriranje naloga (koristi se iz Settings)
+  const updateAccount = async (payload) => {
+    try {
+      const res = await axios.put('/user', payload);
+      const updatedUser = res.data;
+      // Ažuriraj kontekst i localStorage
+      setUser(updatedUser);
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+      return { success: true, user: updatedUser };
+    } catch (err) {
+      if (err.response?.status === 422) {
+        return { success: false, errors: err.response.data.errors || {}, message: 'Došlo je do greške pri validaciji.' };
+      }
+      return { success: false, message: err.response?.data?.message || 'Neuspešno ažuriranje.' };
+    }
+  };
+ 
+   const value = {
+     user,
+     login,
+     register,
+     logout,
+     guestProgress,
+     deleteAccount,
+     updateAccount,
+     saveGuestProgress
+   };
 
   return (
     <AuthContext.Provider value={value}>

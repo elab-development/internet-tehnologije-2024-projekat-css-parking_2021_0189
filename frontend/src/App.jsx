@@ -8,6 +8,7 @@ import ProtectedRoute from './components/routes/ProtectedRoute';
 import PublicRoute from './components/routes/PublicRoute';
 import Levels from './pages/Levels';
 import Level from './pages/Level';
+import Settings from './pages/Settings';
 
 function App() {
   return (
@@ -36,6 +37,11 @@ function App() {
             <Route path="/level/:levelOrder" element={
                 <Level/>
               }/>
+            <Route path="/settings" element={
+              <ProtectedRoute>
+                <Settings/> 
+              </ProtectedRoute>
+            }/>
           </Routes>
         </div>
       </BrowserRouter>

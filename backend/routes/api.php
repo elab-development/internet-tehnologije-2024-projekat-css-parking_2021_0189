@@ -20,18 +20,14 @@ Route::get('/levels/order/{order}', [LevelController::class, 'getByOrder']);
 // Zasticene korisnike
 Route::middleware(['auth:sanctum'])->group(function () {
 
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
-    
+    // User rute
+    Route::get('user', [UserController::class, 'show']);
+    Route::put('user', [UserController::class, 'update']);
+    Route::delete('user', [UserController::class, 'destroy']);
     Route::post('/logout', [AuthController::class, 'logout']);
     
     // Zavrsavanje levela
     Route::post('/levels/{id}/complete', [LevelController::class, 'complete']);
-
-    // User rute
-    Route::get('/admin/users', [UserController::class, 'index']);
-    Route::delete('/admin/users/{id}', [UserController::class, 'destroy']);
     
     // UserLevel rute
     Route::get('/user-levels', [UserLevelController::class, 'showUserLevels']);
@@ -49,5 +45,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/levels/{id}', [LevelController::class, 'destroy']);
         Route::get('/admin/user-levels', [UserLevelController::class, 'index']);
         Route::post('/color-palette', [ColorController::class, 'generatePalette']);
+        Route::delete('/admin/user/{id}', [UserController::class, 'destroyAccount']);
+        Route::get('/admin/users', [UserController::class, 'index']);
     });
 });
