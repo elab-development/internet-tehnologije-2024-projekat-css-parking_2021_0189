@@ -159,30 +159,6 @@ class UserLevelController extends Controller
         ]);
     }
 
-    public function getLeaderboard($levelId)
-    {
-        $level = Level::find($levelId);
-        
-        if (!$level) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Level nije pronađen'
-            ], 404);
-        }
-        
-        $leaderboard = UserLevel::where('level_id', $levelId)
-            ->whereNotNull('duration') // Samo oni koji su završili level
-            ->with('user')
-            ->orderBy('duration', 'asc') // Manji duration = bolji rezultat
-            ->take(10)
-            ->get();
-        
-        return response()->json([
-            'success' => true,
-            'level' => $level,
-            'leaderboard' => $leaderboard
-        ]);
-    }
 
     public function getUserLevelsWithStatus(Request $request)
     {

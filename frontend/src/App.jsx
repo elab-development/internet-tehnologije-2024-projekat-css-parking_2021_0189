@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -9,11 +9,13 @@ import PublicRoute from './components/routes/PublicRoute';
 import Levels from './pages/Levels';
 import Level from './pages/Level';
 import Settings from './pages/Settings';
+import Leaderboards from './pages/Leaderboards';
+import LeaderboardLevel from './pages/LeaderboardLevel';
 
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
+      <Router>
         <div className="App">
           <Routes>
             <Route path="/" element={
@@ -42,9 +44,11 @@ function App() {
                 <Settings/> 
               </ProtectedRoute>
             }/>
+            <Route path="/leaderboards" element={<Leaderboards />} />
+            <Route path="/leaderboards/:levelOrder" element={<LeaderboardLevel />} />
           </Routes>
         </div>
-      </BrowserRouter>
+      </Router>
     </AuthProvider>
   );
 }

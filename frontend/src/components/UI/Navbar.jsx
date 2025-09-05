@@ -28,7 +28,7 @@ const Navbar = () => {
               onClick={() => navigate('/levels')}
               className="bg-transparent hover:bg-blue-600/50 text-white px-4 py-2 rounded-full border-none"
             >
-              Igraj
+              Play game
             </button>
 
             <button
@@ -44,7 +44,7 @@ const Navbar = () => {
                   onClick={() => navigate('/admin/dashboard')}
                   className="bg-transparent hover:bg-blue-600/50 text-white px-4 py-2 rounded-full border-none"
                 >
-                  Admin Dashboard
+                  Dashboard
                 </button>
 
                 <button
