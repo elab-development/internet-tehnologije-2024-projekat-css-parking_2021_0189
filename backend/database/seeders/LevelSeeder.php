@@ -422,6 +422,87 @@ class LevelSeeder extends Seeder
                     'skew' => ['x' => 0, 'y' => 45]
                 ]
                 ],
+            ],
+            [
+                'title' => 'Nivo 6',
+                'order' => 6,
+                'description' => 'Izgleda da je jedino parking slobodno mesto jako usko. Pokušaj da pornađeš način da ga parkiraš! Možda će ti scale() pomoći?',
+                'base_color' => '#525252ff',
+                'player_car' => [
+                    'x' => 0, 'y' => 0, 'width' => 20, 'height' => 15, 'rotate' => 90, 'color' => '#FF0000', 'scale' => ['x' => 1.2, 'y' => 1.0]
+                ],
+                'parking_spots' => [
+                [
+                    'id' => 1,
+                    'x' => 75,
+                    'y' => 0,
+                    'width' => 20,
+                    'height' => 15,
+                    'rotate' => 0,
+                    'is_target' => false,
+                    'color' => '#ff5100ff',
+                ],
+                [
+                    'id' => 2,
+                    'x' => 75,
+                    'y' => 15,
+                    'width' => 20,
+                    'height' => 15,
+                    'rotate' => 0,
+                    'is_target' => false,
+                    'color' => '#09ff00ff',
+                ],
+                [
+                    'id' => 3,
+                    'x' => 75,
+                    'y' => 30,
+                    'width' => 20,
+                    'height' => 15,
+                    'rotate' => 0,
+                    'is_target' => false,
+                    'color' => '#0011ffff',
+                ],
+                [
+                    'id' => 4,
+                    'x' => 75,
+                    'y' => 45,
+                    'width' => 20,
+                    'height' => 6,
+                    'rotate' => 0,
+                    'is_target' => true,
+                    'color' => '#e100ffff'
+                ],
+                [
+                    'id' => 5,
+                    'x' => 75,
+                    'y' => 51,
+                    'width' => 20,
+                    'height' => 15,
+                    'rotate' => 0,
+                    'is_target' => false,
+                    'color' => '#fffb00ff',
+                ],
+                [
+                    'id' => 6,
+                    'x' => 75,
+                    'y' => 66,
+                    'width' => 20,
+                    'height' => 15,
+                    'rotate' => 0,
+                    'is_target' => false,
+                    'color' => '#e100ffff',
+                ],
+                [
+                    'id' => 7,
+                    'x' => 75,
+                    'y' => 81,
+                    'width' => 20,
+                    'height' => 15,
+                    'rotate' => 0,
+                    'is_target' => false,
+                    'color' => '#2c1401ff',
+                ],
+                ]
             ]
             
         ];
