@@ -33,7 +33,12 @@ export default function LeaderboardLevel() {
         <div className="max-w-4xl mx-auto p-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-2xl font-semibold">Leaderboard — {data.levelTitle}</h2>
-            <Link to="/leaderboards" className="text-sm text-blue-600 hover:underline">Nazad</Link>
+            <Link
+            to="/leaderboards"
+            className="px-4 py-2 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 text-sm font-medium transition"
+            >
+            Nazad
+            </Link>
           </div>
 
           <div className="mb-4">

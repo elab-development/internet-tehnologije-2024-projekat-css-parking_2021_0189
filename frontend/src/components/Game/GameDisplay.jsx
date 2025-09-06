@@ -35,7 +35,7 @@ export default function GameDisplay({ level, userCss = '', playgroundRef, player
               top: `${spot.y}%`,
               width: `${spot.width}%`,
               height: `${spot.height}%`,
-              transform: `rotate(${spot.rotate ?? 0}deg) skew(${spot.skew?.x ?? 0}deg, ${spot.skew?.y ?? 0}deg) scale(${player.scale?.x ?? 1}, ${player.scale?.y ?? 1})`,
+              transform: `rotate(${spot.rotate ?? 0}deg) skew(${spot.skew?.x ?? 0}deg, ${spot.skew?.y ?? 0}deg) scale(${spot.scale?.x ?? 1}, ${spot.scale?.y ?? 1})`,
               border: `2px solid ${isTargetAndCorrect ? 'green' : 'white'}`,
               boxSizing: 'border-box',
               zIndex: spot.is_target ? 2 : 1

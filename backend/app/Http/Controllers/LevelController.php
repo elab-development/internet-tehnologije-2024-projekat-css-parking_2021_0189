@@ -33,7 +33,7 @@ class LevelController extends Controller
             'title' => 'required|string|max:255',
             'order' => 'required|integer|unique:levels,order',
             'description' => 'nullable|string',
-            'base_color' => 'nullable|string|max:7',
+            'base_color' => 'nullable|string|max:9',
             'player_car' => 'required|array',
             'player_car.x' => 'required|integer',
             'player_car.y' => 'required|integer',

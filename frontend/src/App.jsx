@@ -11,6 +11,7 @@ import Level from './pages/Level';
 import Settings from './pages/Settings';
 import Leaderboards from './pages/Leaderboards';
 import LeaderboardLevel from './pages/LeaderboardLevel';
+import LevelDesigner from './pages/LevelDesigner';
 
 function App() {
   return (
@@ -46,6 +47,12 @@ function App() {
             }/>
             <Route path="/leaderboards" element={<Leaderboards />} />
             <Route path="/leaderboards/:levelOrder" element={<LeaderboardLevel />} />
+
+            <Route path="/admin/level-designer" element={
+              <ProtectedRoute requiredRole="admin">
+                <LevelDesigner />
+              </ProtectedRoute>
+            }/>
           </Routes>
         </div>
       </Router>

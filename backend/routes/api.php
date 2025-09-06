@@ -18,7 +18,7 @@ Route::get('/levels/{id}', [LevelController::class, 'show']);
 
 // Leaderboards - javno dostupno
 Route::get('/leaderboards', [LeaderboardController::class, 'index']);
-Route::get('/leaderboards/{levelId}', [LeaderboardController::class, 'show']);
+Route::get('/leaderboards/{levelOrder}', [LeaderboardController::class, 'show']);
 Route::get('/levels/order/{order}', [LevelController::class, 'getByOrder']);
 
 Route::middleware(['auth:sanctum'])->group(function () {

@@ -1,7 +1,7 @@
 
 const Car = ({ color, svgRef, ...props }) => {
   return (
-    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 48 48" style="enable-background:new 0 0 48 48;" xmlSpace="preserve" {...props}>
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 48 48" enableBackground="new 0 0 48 48" xmlSpace="preserve" {...props}>
     <g>
     </g>
     <g>
