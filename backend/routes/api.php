@@ -49,5 +49,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/color-palette', [ColorController::class, 'generatePalette']);
         Route::delete('/admin/users/{id}', [UserController::class, 'destroyAccount']);
         Route::get('/admin/users', [UserController::class, 'index']);
+        Route::get('/admin/users/export', [UserController::class, 'exportUsers']);
     });
 });

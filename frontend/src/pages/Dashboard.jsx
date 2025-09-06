@@ -30,6 +30,25 @@ export default function Dashboard() {
         }
     };
 
+
+    const exportUsers = async () => {
+        try {
+            const response = await axios.get('/admin/users/export', {
+                responseType: 'blob'
+            });
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `users_${new Date().toISOString().split('T')[0]}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+        } catch (error) {
+            console.error('Error exporting users:', error);
+        }
+    };
+
+
     const handleDelete = async (userId) => {
         if (!window.confirm('Are you sure you want to delete this user?')) return;
         
@@ -144,6 +163,12 @@ export default function Dashboard() {
                             })}
                         </div>
                     </div>
+                    <button
+                        onClick={exportUsers}
+                        className="bg-green-500 text-white mt-8 px-4 py-2 rounded hover:bg-green-600"
+                    >
+                        Export podatke kao CSV
+                    </button>
                 </div>
             </div>
         </>
