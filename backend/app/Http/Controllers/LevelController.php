@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Models\Level;
 use App\Models\UserLevel;
+use Illuminate\Support\Facades\Cache;
 
 class LevelController extends Controller
 {
@@ -16,12 +17,16 @@ class LevelController extends Controller
      */
     public function index()
     {
-        $levels = Level::orderBy('order', 'asc')->get();
         
+        $levels = Cache::remember('levels', 3600, function () {
+            return Level::orderBy('order', 'asc')->get();
+        });
         return response()->json([
             'success' => true,
             'data' => $levels
         ]);
+
+        
     }
 
     /**
@@ -63,9 +68,14 @@ class LevelController extends Controller
             'parking_spots.*.is_target' => 'required|boolean',
             'parking_spots.*.color' => 'required|string|max:7'
         ]);
-        
+
+
         $level = Level::create($validated);
-        
+
+        Cache::forget('levels');
+        Cache::forget('level_order_' . $level->order);
+        Cache::forget('level_' . $level->id);
+
         return response()->json([
             'success' => true,
             'message' => 'Level uspešno kreiran',
@@ -78,7 +88,9 @@ class LevelController extends Controller
      */
     public function show(string $id)
     {
-        $level = Level::find($id);
+        $level = Cache::remember("level_{$id}", 300, function () use ($id) {
+            return Level::find($id);
+        });
         
         if (!$level) {
             return response()->json([
@@ -95,7 +107,9 @@ class LevelController extends Controller
 
     public function getByOrder(string $order)
     {
-        $level = Level::where('order', $order)->first();
+        $level = Cache::remember('level_order_' . $order, 3600, function () use ($order) {
+            return Level::where('order', $order)->first();
+        });
         
         if (!$level) {
             return response()->json([
@@ -151,6 +165,10 @@ class LevelController extends Controller
         
         $level->update($validated);
         
+        Cache::forget('levels');
+        Cache::forget('level_' . $level->id);
+        Cache::forget('level_order_' . $level->order);
+
         return response()->json([
             'success' => true,
             'message' => 'Level uspešno ažuriran',
@@ -173,6 +191,10 @@ class LevelController extends Controller
         }
         
         $level->delete();
+
+        Cache::forget('levels');
+        Cache::forget('level_' . $level->id);
+        Cache::forget('level_order_' . $level->order);
         
         return response()->json([
             'success' => true,
