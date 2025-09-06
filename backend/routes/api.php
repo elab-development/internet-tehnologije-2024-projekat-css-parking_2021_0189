@@ -47,7 +47,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/admin/users/{id}', [UserController::class, 'destroy']);
         Route::get('/admin/user-levels', [UserLevelController::class, 'index']);
         Route::post('/color-palette', [ColorController::class, 'generatePalette']);
-        Route::delete('/admin/user/{id}', [UserController::class, 'destroyAccount']);
+        Route::delete('/admin/users/{id}', [UserController::class, 'destroyAccount']);
         Route::get('/admin/users', [UserController::class, 'index']);
     });
 });

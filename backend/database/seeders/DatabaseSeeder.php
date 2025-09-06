@@ -23,7 +23,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Kreiranje običnih korisnika
-        User::factory(10)->create();
+        User::factory(100)->create();
 
         // Kreiranje levela
         //Level::factory(5)->create();

@@ -13,15 +13,28 @@ class UserController
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = User::query();
         
-        $users = User::withCount('userLevels')
-            ->with(['userLevels' => function($query) {
-                $query->whereNotNull('duration');
-            }])
-            ->paginate(10);
-        
+        // Search/filter functionality
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        // Role filter
+        if ($request->has('role') && $request->role != '') {
+            $query->where('role', $request->role);
+        }
+
+        // Pagination
+        $perPage = $request->per_page ?? 10;
+        $users = $query->paginate($perPage);
+
         return response()->json([
             'success' => true,
             'data' => $users
