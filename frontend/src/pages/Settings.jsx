@@ -186,9 +186,6 @@ export default function Settings() {
               </div>
             </div>
 
-            {errors.password && <div className="text-sm text-red-600">{errors.password}</div>}
-            {errors.password_confirmation && <div className="text-sm text-red-600">{errors.password_confirmation}</div>}
-
             <div className="flex items-center gap-3">
               <button
                 type="submit"

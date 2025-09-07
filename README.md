@@ -36,7 +36,6 @@ Ovo je web aplikacija koja kroz igricu parkiranja automobila uči korisnike CSS 
 1. Kloniraj repozitorijum:
 ``` bash
     git clone https://github.com/elab-development/internet-tehnologije-2024-projekat-css-parking_2021_0189.git
-    cd css-parking
 ```
 2. Instaliraj PHP dependences:
 ``` bash
