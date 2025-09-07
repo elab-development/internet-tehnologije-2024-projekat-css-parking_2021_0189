@@ -67,6 +67,6 @@ class LeaderboardController extends Controller
             'levelTitle' => $level->title,
             'top'        => $results,
         ]);
-}
+    }
 
 }

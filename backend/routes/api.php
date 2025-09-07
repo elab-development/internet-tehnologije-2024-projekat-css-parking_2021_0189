@@ -44,7 +44,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::post('/levels', [LevelController::class, 'store']);
         Route::put('/levels/{id}', [LevelController::class, 'update']);
         Route::delete('/levels/{id}', [LevelController::class, 'destroy']);
-        Route::delete('/admin/users/{id}', [UserController::class, 'destroy']);
         Route::get('/admin/user-levels', [UserLevelController::class, 'index']);
         Route::post('/color-palette', [ColorController::class, 'generatePalette']);
         Route::delete('/admin/users/{id}', [UserController::class, 'destroyAccount']);

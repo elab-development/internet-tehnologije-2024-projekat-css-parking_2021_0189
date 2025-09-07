@@ -89,7 +89,7 @@ export default function LevelDesigner() {
 
         const hexPalette = palette.map(rgbToHex);
 
-        // Primer raspodele boja: 1. baza, 2. player, ostalo parking spots
+        // raspodela boja: 1. baza, 2. player, ostalo parking spots
         setLevel(prev => ({
           ...prev,
           base_color: hexPalette[0] || "#dbeafe",
@@ -145,7 +145,7 @@ export default function LevelDesigner() {
       
       {/* Level Info */}
       <div className="mb-4 flex justify-center">
-        <div className="mb-4 bg-white rounded-lg shadow p-4">
+        <div className="mb-4 bg-gray-100 rounded-lg shadow p-4">
           <h2 className="text-base font-semibold text-gray-800 mb-3">Level info</h2>
 
           <div className="grid grid-cols-3 gap-3">
