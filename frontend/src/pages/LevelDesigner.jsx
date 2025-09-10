@@ -88,6 +88,7 @@ export default function LevelDesigner() {
         };
 
         const hexPalette = palette.map(rgbToHex);
+        const parkingColors = hexPalette.slice(2);
 
         // raspodela boja: 1. baza, 2. player, ostalo parking spots
         setLevel(prev => ({
@@ -96,7 +97,7 @@ export default function LevelDesigner() {
           player_car: { ...prev.player_car, color: hexPalette[1] || "#ff0000" },
           parking_spots: prev.parking_spots.map((s, idx) => ({ 
             ...s, 
-            color: hexPalette[(idx + 2) % hexPalette.length] || "#00ff00" 
+            color: parkingColors[idx % parkingColors.length] || "#00ff00" 
           }))
         }));
       } else {

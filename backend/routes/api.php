@@ -32,11 +32,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/levels/{id}/complete', [LevelController::class, 'complete']);
     
     // UserLevel rute
+    Route::resource('user-levels', UserLevelController::class)->except(['index', 'create', 'edit']);
     Route::get('/user-levels', [UserLevelController::class, 'showUserLevels']);
-    Route::get('/user-levels/{id}', [UserLevelController::class, 'show']);
-    Route::post('/user-levels', [UserLevelController::class, 'store']);
-    Route::put('/user-levels/{id}', [UserLevelController::class, 'update']);
-    Route::delete('/user-levels/{id}', [UserLevelController::class, 'destroy']);
     Route::get('/user-levels-status', [UserLevelController::class, 'getUserLevelsWithStatus']);
     
     // Admin rute - samo za admine

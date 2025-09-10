@@ -22,6 +22,13 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('password')
         ]);
 
+        // Kreiranje obicnog korisnika
+        User::factory()->create([
+            'name' => 'Ime Prezime',
+            'email' => 'user@example.com',
+            'password' => bcrypt('password')
+        ]);
+
         // Kreiranje običnih korisnika
         User::factory(100)->create();
 

@@ -81,9 +81,6 @@ class UserController
     {
         $user = $request->user();
 
-        // opcionalno: obriši povezane zapise (user_levels)
-        $user->levels()->delete(); // ili detach pivot
-
         // obriši sve token-e
         $user->tokens()->delete();
 

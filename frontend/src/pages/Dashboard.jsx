@@ -12,6 +12,7 @@ export default function Dashboard() {
         page: 1
     });
     const [pagination, setPagination] = useState({});
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         fetchUsers();
@@ -43,8 +44,9 @@ export default function Dashboard() {
             document.body.appendChild(link);
             link.click();
             link.remove();
+            setError(null);
         } catch (error) {
-            console.error('Error exporting users:', error);
+            setError(error.response?.data?.message || "Greška prilikom export-a.");
         }
     };
 
@@ -54,9 +56,10 @@ export default function Dashboard() {
         
         try {
             await axios.delete(`/admin/users/${userId}`);
-            fetchUsers(); // Refresh the list
+            fetchUsers();
+            setError(null);
         } catch (error) {
-            console.error('Error deleting user:', error);
+            setError(error.response?.data?.message || "Greška prilikom brisanja korisnika.");
         }
     };
 
@@ -99,6 +102,15 @@ export default function Dashboard() {
                             </select>
                         </div>
                     </div>
+
+
+
+                    {/* Error message */}
+                    {error && (
+                        <div className="mt-4 mb-4 p-3 bg-red-100 text-red-700 rounded">
+                            {error}
+                        </div>
+                    )}
 
                     {/* Users Table */}
                     <div className="bg-white rounded-lg shadow-md overflow-hidden">
